@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Notificaciones · Instatic</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+    .message {
+      color: #444;
+      font-size: 15px;
+    }
+    .timestamp {
+      font-size: 12px;
+      color: #999;
+      margin-left: 10px;
+      white-space: nowrap;
+    }
+    .icon {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+    .empty {
+      text-align: center;
+      color: #888;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔔 Notificaciones</h2>
+    <ul>
+      {% for n in notifications %}
+        <li>
+          <div class="message">
+            {% if n.notification_type == 'like' %}
+              <span class="icon">❤️</span> {{ n.sender }} le dio like a tu foto
+            {% elif n.notification_type == 'comment' %}
+              <span class="icon">💬</span> {{ n.sender }} comentó en tu foto
+            {% elif n.notification_type == 'follow' %}
+              <span class="icon">👤</span> {{ n.sender }} empezó a seguirte
+            {% endif %}
+          </div>
+          <div class="timestamp">{{ n.created_at|date:"d M Y · H:i" }}</div>
+        </li>
+      {% empty %}
+        <li class="empty">No tienes notificaciones aún.</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% include 'includes/footer.html' %}
+</body>
+</html>

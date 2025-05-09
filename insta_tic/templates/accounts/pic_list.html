@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Fotos · Instatic</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h2>Mis Fotos</h2>
+  {% if pics %}
+    <div class="grid">
+      {% for pic in pics %}
+        <a href="{% url 'pic_detail' pic.id %}">
+          <img src="{{ pic.image.url }}" alt="{{ pic.caption|default:'Sin descripción' }}">
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No hay fotos para mostrar.</p>
+  {% endif %}
+</body>
+</html>

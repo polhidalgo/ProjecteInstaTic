@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Perfil · Instatic</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; }
+    .container { max-width: 400px; margin: 80px auto; padding: 20px; background: #fff; border-radius: 8px; }
+    h2 { text-align: center; margin-bottom: 20px; }
+    form { display: flex; flex-direction: column; }
+    input, textarea { margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+    button { padding: 10px; background: #28a745; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #1e7e34; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Editar Perfil</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      {{ form.username.errors }}
+      {{ form.username }}
+
+      {{ form.email.errors }}
+      {{ form.email }}
+
+      {{ form.bio.errors }}
+      {{ form.bio }}
+
+      {{ form.profile_pic.errors }}
+      {{ form.profile_pic }}
+
+      <button type="submit">Guardar cambios</button>
+    </form>
+  </div>
+</body>
+</html>
