@@ -2,7 +2,6 @@
 
 **Instatic** és una aplicació web senzilla inspirada en Instagram, desenvolupada com a projecte escolar. La primera versió inclou funcionalitats bàsiques com el registre d'usuaris, inici de sessió i edició de perfil.
 
-```
 
 ## ⚙️ Tecnologies utilitzades
 
