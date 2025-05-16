@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d63f4f1-f16d-41b8-b3ad-0a37b9623a78" name="Changes" comment="Changes" />
+    <list default="true" id="4d63f4f1-f16d-41b8-b3ad-0a37b9623a78" name="Changes" comment="Changes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/insta_tic/accounts/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/insta_tic/accounts/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/insta_tic/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/insta_tic/backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/insta_tic/media/pics/2025/05/07/me.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/insta_tic/media/pics/2025/05/07/photo-1542831371-29b0f74f9713.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/insta_tic/media/pics/2025/05/09/Horario_DAW.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/insta_tic/media/pics/2025/05/09/Wifi_ITIC.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/insta_tic/pics/2025/05/07/Horario_AA_Jiujitsu.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/insta_tic/pics/2025/05/07/Wifi_ITIC.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/insta_tic/pics/2025/05/07/Wifi_ITIC.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/insta_tic/profile_pics/me.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/insta_tic/profile_pics/me.jpeg" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,23 +24,23 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "polhidalgo"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;polhidalgo&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/polhidalgo/ProjecteInstaTic.git",
-    "accountId": "7a5516a6-06a6-4c57-91f0-1a0ef2187bfa"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/polhidalgo/ProjecteInstaTic.git&quot;,
+    &quot;accountId&quot;: &quot;7a5516a6-06a6-4c57-91f0-1a0ef2187bfa&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -40,7 +54,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/PolHidalgo/Desktop/POL/INS_TIC/ProjecteInstaTic"
   }
 }]]></component>
