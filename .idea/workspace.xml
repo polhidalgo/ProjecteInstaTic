@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d63f4f1-f16d-41b8-b3ad-0a37b9623a78" name="Changes" comment="" />
+    <list default="true" id="4d63f4f1-f16d-41b8-b3ad-0a37b9623a78" name="Changes" comment="Changes">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/feed.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/feed.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/notifications.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/notifications.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/pic_detail.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/pic_detail.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/profile_edit.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/profile_edit.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/public_profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/public_profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/register.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/register.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/upload.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/upload.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/user_search.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/user_search.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2xAwNC1tbnW51oHfdjYve9R7LPa" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -23,7 +41,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "staticFiles",
     "last_opened_file_path": "C:/Users/PolHidalgo/Desktop/POL/INS_TIC/insta_tic"
   }
 }]]></component>
@@ -43,6 +61,19 @@
       <option name="presentableId" value="Default" />
       <updated>1747394144257</updated>
     </task>
+    <task id="LOCAL-00001" summary="Changes">
+      <option name="closed" value="true" />
+      <created>1747394583201</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1747394583201</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes" />
   </component>
 </project>
