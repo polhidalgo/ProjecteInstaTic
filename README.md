@@ -1,4 +1,4 @@
-# 📷 Instatic - Red Social Juvenil con Django + HTMX
+# 📷 Instatic - Red Social con Django + HTMX
 
 **Instatic** es una red social desarrollada con **Django**, que permite a los usuarios registrarse, subir fotos, dar likes, comentar, seguir a otros usuarios y recibir notificaciones. Además, utiliza **HTMX** para mejorar la experiencia de usuario.
 
