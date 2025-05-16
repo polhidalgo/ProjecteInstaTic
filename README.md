@@ -112,6 +112,6 @@ instatic/
 
 ---
 
-## 🧑‍💻 Autor
+## 🧑‍💻 Autores
 
-Proyecto desarrollado por [Tu Nombre / Usuario GitHub].
+Proyecto desarrollado por Rafel Dalmau, Enric Ulloa y Pol Hidalgo.
