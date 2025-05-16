@@ -1,0 +1,22 @@
+<footer style="
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--primary-blue);
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+  color: white;
+  z-index: 1000;
+">
+  <a href="{% url 'profile' %}" style="text-decoration: none; color: white; font-size: 18px;">👤 Perfil</a>
+  <a href="{% url 'feed' %}" style="text-decoration: none; color: white; font-size: 18px;">📰 Feed</a>
+  <p> © 2023 Instatic </p>
+  <a href="{% url 'user_search' %}" style="text-decoration: none; color: white; font-size: 18px;">🔍 Buscar</a>
+  <a href="{% url 'notifications' %}" style="text-decoration: none; color: white; font-size: 18px;">🔔 Avisos</a>
+</footer>
