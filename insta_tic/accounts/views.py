@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
@@ -73,6 +74,7 @@ class PicUploadView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+
 class PicDetailView(LoginRequiredMixin, DetailView):
     model = Pic
     template_name = 'accounts/pic_detail.html'
@@ -84,6 +86,42 @@ class PicDetailView(LoginRequiredMixin, DetailView):
         context['is_liked'] = pic.likes.filter(user=self.request.user).exists()
         context['likes_count'] = pic.likes.count()
         return context
+
+    def post(self, request, *args, **kwargs):
+        pic = self.get_object()
+
+        if 'like' in request.POST:
+            like, created = Like.objects.get_or_create(user=request.user, pic=pic)
+            if not created:
+                like.delete()
+
+            if request.headers.get('HX-Request'):
+                is_liked = pic.likes.filter(user=request.user).exists()
+                likes_count = pic.likes.count()
+                return render(request, 'accounts/partials/like_section.html', {
+                    'pic': pic,
+                    'is_liked': is_liked,
+                    'likes_count': likes_count
+                })
+            return redirect('pic_detail', pk=pic.id)
+
+        elif 'comment' in request.POST:
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.user = request.user
+                comment.pic = pic
+                comment.save()
+
+                if request.headers.get('HX-Request'):
+                    comments = pic.comments.all()
+                    return render(request, 'accounts/partials/comment_list.html', {
+                        'pic': pic,
+                        'comments': comments
+                    })
+            return redirect('pic_detail', pk=pic.id)
+
+        return redirect('pic_detail', pk=pic.id)
 
 class PicDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Pic
@@ -112,43 +150,34 @@ class FeedView(LoginRequiredMixin, View):
         })
 
     def post(self, request):
-        if 'pic_id' in request.POST and 'like' in request.POST:
-            # Like/unlike toggle
-            pic = get_object_or_404(Pic, id=request.POST.get('pic_id'))
-            like, created = Like.objects.get_or_create(user=request.user, pic=pic)
+        pic = get_object_or_404(Pic, id=request.POST.get('pic_id'))
 
+        if 'like' in request.POST:
+            like, created = Like.objects.get_or_create(user=request.user, pic=pic)
             if not created:
                 like.delete()
-            else:
-                # Notifica solo si no es tu propia foto
-                if pic.user != request.user:
-                    Notification.objects.create(
-                        recipient=pic.user,
-                        sender=request.user,
-                        notification_type='like',
-                        pic=pic
-                    )
-            return redirect('feed')
 
-        # Comentario
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = request.user
-            comment.pic_id = request.POST.get('pic_id')
-            comment.save()
+            return JsonResponse({
+                'is_liked': pic.likes.filter(user=request.user).exists(),
+                'likes_count': pic.likes.count()
+            })
 
-            # Notifica al autor de la imagen si no eres tú
-            pic = comment.pic
-            if pic.user != request.user:
-                Notification.objects.create(
-                    recipient=pic.user,
-                    sender=request.user,
-                    notification_type='comment',
-                    pic=pic
-                )
+        elif 'comment' in request.POST:
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.user = request.user
+                comment.pic = pic
+                comment.save()
 
-        return redirect('feed')
+                # Obtener todos los comentarios actualizados
+                comments = pic.comments.all().values('content', 'user__username')
+
+                return JsonResponse({
+                    'comments': list(comments)
+                })
+
+        return JsonResponse({'error': 'Invalid request'}, status=400)
 
 class UserSearchView(LoginRequiredMixin, View):
     template_name = 'accounts/user_search.html'
@@ -167,39 +196,46 @@ class UserSearchView(LoginRequiredMixin, View):
 class PublicProfileView(LoginRequiredMixin, View):
     template_name = 'accounts/public_profile.html'
 
+    def get(self, request, username):
+        profile_user = get_object_or_404(CustomUser, username=username)
+        if profile_user == request.user:
+            return redirect('profile')
+
+        pics = profile_user.pics.all().order_by('-created_at')
+        # Add like status for each pic
+        for pic in pics:
+            pic.is_liked = pic.likes.filter(user=request.user).exists()
+            pic.likes_count = pic.likes.count()
+
+        is_following = Follower.objects.filter(follower=request.user, followed=profile_user).exists()
+        followers_count = profile_user.followers.count()
+        following_count = profile_user.following.count()
+
+        return render(request, self.template_name, {
+            'profile_user': profile_user,
+            'pics': pics,
+            'is_following': is_following,
+            'followers_count': followers_count,
+            'following_count': following_count,
+            'comment_form': CommentForm(),
+        })
+
     def post(self, request, username):
         profile_user = get_object_or_404(CustomUser, username=username)
 
         if 'follow' in request.POST:
-            _, created = Follower.objects.get_or_create(
-                follower=request.user,
-                followed=profile_user
-            )
-            if created and profile_user != request.user:
-                Notification.objects.create(
-                    recipient=profile_user,
-                    sender=request.user,
-                    notification_type='follow'
-                )
-
+            Follower.objects.get_or_create(follower=request.user, followed=profile_user)
         elif 'unfollow' in request.POST:
             Follower.objects.filter(follower=request.user, followed=profile_user).delete()
-
         elif 'like' in request.POST:
             pic = get_object_or_404(Pic, id=request.POST.get('pic_id'))
-            like, created = Like.objects.get_or_create(user=request.user, pic=pic)
+            like, created = Like.objects.get_or_create(
+                user=request.user,
+                pic=pic
+            )
             if not created:
                 like.delete()
-            else:
-                if pic.user != request.user:
-                    Notification.objects.create(
-                        recipient=pic.user,
-                        sender=request.user,
-                        notification_type='like',
-                        pic=pic
-                    )
             return redirect('user_public_profile', username=username)
-
         elif 'comment' in request.POST:
             form = CommentForm(request.POST)
             if form.is_valid():
@@ -207,15 +243,6 @@ class PublicProfileView(LoginRequiredMixin, View):
                 comment.user = request.user
                 comment.pic_id = request.POST.get('pic_id')
                 comment.save()
-
-                pic = comment.pic
-                if pic.user != request.user:
-                    Notification.objects.create(
-                        recipient=pic.user,
-                        sender=request.user,
-                        notification_type='comment',
-                        pic=pic
-                    )
 
         return redirect('user_public_profile', username=username)
 
