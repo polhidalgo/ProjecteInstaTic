@@ -1,0 +1,15 @@
+
+<form
+  hx-post="{% url 'feed' %}"
+  hx-target="#like-section-{{ pic.id }}"
+  hx-swap="outerHTML"
+  method="post"
+  style="display: inline;"
+>
+  {% csrf_token %}
+  <input type="hidden" name="pic_id" value="{{ pic.id }}">
+  <button name="like" type="submit" class="btn-like">
+    {% if pic.is_liked %}❤️{% else %}🤍{% endif %}
+  </button>
+  <span class="likes-count">{{ pic.likes_count }}</span>
+</form>

@@ -1,0 +1,12 @@
+{% if pic.comments.all %}
+  <ul class="comment-list">
+    {% for comment in pic.comments.all %}
+      <li class="comment-item">
+        <div class="comment-author">{{ comment.user.username }}</div>
+        <p class="comment-content">{{ comment.content }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="no-comments">No hay comentarios aún. ¡Sé el primero en comentar!</p>
+{% endif %}
