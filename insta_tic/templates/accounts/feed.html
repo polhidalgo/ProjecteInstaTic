@@ -1,60 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  {% load static %}
   <meta charset="UTF-8">
   <title>Feed · Instatic</title>
-  <style>
-    body { font-family: sans-serif; background: #fafafa; padding: 20px; }
-    .post { background: #fff; padding: 15px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .post img { width: 100%; border-radius: 4px; margin-bottom: 10px; }
-    .caption { font-weight: bold; margin-bottom: 5px; }
-    .comments { margin-top: 10px; }
-    .comment { margin-bottom: 5px; }
-    form { display: flex; margin-top: 10px; }
-    input.comment-input { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
-    button { margin-left: 8px; padding: 8px 12px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/feed.css' %}">
 </head>
 <body>
-  <h1>Feed</h1>
+  <div class="container">
+    <h1>Feed Social</h1>
 
-  {% for pic in pics %}
-    <div class="post">
-      <div class="caption">{{ pic.user.username }}: {{ pic.caption }}</div>
-      <div class="likes">
-        <form method="post" style="display:inline;">
-        {% csrf_token %}
-        <input type="hidden" name="pic_id" value="{{ pic.id }}">
-        <button type="submit" name="like" style="background:none; border:none; cursor:pointer;">
-            {% if pic.is_liked %}
-                ❤️
-            {% else %}
-                🤍
-            {% endif %}
-        </button>
-        <span>{{ pic.likes_count }} likes</span>
+    {% for pic in pics %}
+      <div class="post" id="post-{{ pic.id }}">
+        <div class="post-header">
+          {% if pic.user.profile_pic %}
+            <img src="{{ pic.user.profile_pic.url }}" alt="Avatar" class="user-avatar">
+          {% else %}
+            <img src="{% static 'default_profile.png' %}" alt="Avatar" class="user-avatar">
+          {% endif %}
+          <span class="username">{{ pic.user.username }}</span>
+        </div>
+
+        <div class="caption">{{ pic.caption }}</div>
+
+        <img src="{{ pic.image.url }}" alt="Imagen de {{ pic.user.username }}" class="post-image">
+
+        <div class="actions">
+          <button class="btn-like" data-pic-id="{{ pic.id }}">
+            {% if pic.is_liked %}❤️{% else %}🤍{% endif %}
+          </button>
+          <span class="likes-count" id="likes-count-{{ pic.id }}">{{ pic.likes_count }} me gusta</span>
+        </div>
+
+        <div class="comments" id="comments-{{ pic.id }}">
+          {% for c in pic.comments.all %}
+            <div class="comment"><strong>{{ c.user.username }}:</strong> {{ c.content }}</div>
+          {% endfor %}
+        </div>
+
+        <form class="comment-form" data-pic-id="{{ pic.id }}">
+          {% csrf_token %}
+          <input type="text" class="comment-input" placeholder="Escribe un comentario..." required>
+          <button type="submit">Enviar</button>
         </form>
       </div>
-      <img src="{{ pic.image.url }}" alt="Imagen de {{ pic.user.username }}">
+    {% empty %}
+      <p class="empty-feed">No hay publicaciones de tus seguidos. ¡Sigue a más amigos para ver su contenido!</p>
+    {% endfor %}
+  </div>
 
-      <div class="comments">
-        {% for comment in pic.comments.all %}
-          <div class="comment"><strong>{{ comment.user.username }}:</strong> {{ comment.content }}</div>
-        {% empty %}
-          <div class="comment">No hay comentarios.</div>
-        {% endfor %}
-      </div>
+  <script>
+  $(document).ready(function() {
+    // Manejar likes
+    $('.btn-like').click(function(e) {
+      e.preventDefault();
+      const picId = $(this).data('pic-id');
+      const likeBtn = $(this);
+      const likesCount = $('#likes-count-' + picId);
 
-      <form method="post">
-        {% csrf_token %}
-        {{ comment_form.content }}
-        <input type="hidden" name="pic_id" value="{{ pic.id }}">
-        <button type="submit">Comentar</button>
-      </form>
-    </div>
-  {% empty %}
-    <p>No hay publicaciones todavía de tus seguidos.</p>
-  {% endfor %}
+      $.ajax({
+        url: "{% url 'feed' %}",
+        type: "POST",
+        data: {
+          pic_id: picId,
+          like: 1,
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(response) {
+          likeBtn.html(response.is_liked ? '❤️' : '🤍');
+          likesCount.text(response.likes_count + ' me gusta');
+
+          // Efecto visual al dar like
+          if (response.is_liked) {
+            likeBtn.css('transform', 'scale(1.3)');
+            setTimeout(() => {
+              likeBtn.css('transform', 'scale(1)');
+            }, 300);
+          }
+        }
+      });
+    });
+
+    // Manejar comentarios
+    $('.comment-form').submit(function(e) {
+      e.preventDefault();
+      const picId = $(this).data('pic-id');
+      const commentInput = $(this).find('.comment-input');
+      const commentText = commentInput.val();
+      const commentsDiv = $('#comments-' + picId);
+
+      if (commentText.trim() === '') return;
+
+      $.ajax({
+        url: "{% url 'feed' %}",
+        type: "POST",
+        data: {
+          pic_id: picId,
+          content: commentText,
+          comment: 1,
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(response) {
+          // Limpiar el input
+          commentInput.val('');
+
+          // Actualizar la lista de comentarios
+          commentsDiv.empty();
+          response.comments.forEach(function(comment) {
+            commentsDiv.append(
+              `<div class="comment"><strong>${comment.user__username}:</strong> ${comment.content}</div>`
+            );
+          });
+
+          // Efecto visual al comentar
+          commentsDiv.animate({ scrollTop: commentsDiv[0].scrollHeight }, 300);
+        }
+      });
+    });
+  });
+  </script>
 {% include 'includes/footer.html' %}
 </body>
 </html>

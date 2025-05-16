@@ -1,39 +1,91 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  {% load static %}
   <meta charset="UTF-8">
   <title>Editar Perfil · Instatic</title>
-  <style>
-    body { font-family: sans-serif; background: #f0f0f0; }
-    .container { max-width: 400px; margin: 80px auto; padding: 20px; background: #fff; border-radius: 8px; }
-    h2 { text-align: center; margin-bottom: 20px; }
-    form { display: flex; flex-direction: column; }
-    input, textarea { margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-    button { padding: 10px; background: #28a745; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #1e7e34; }
-  </style>
+  <link rel="stylesheet" href="{% static 'css/profile_edit.css' %}">
 </head>
 <body>
-  <div class="container">
-    <h2>Editar Perfil</h2>
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.non_field_errors }}
+  <div class="profile-edit-container">
+    <div class="profile-edit-header">
+      <h2>Editar Perfil</h2>
+    </div>
 
-      {{ form.username.errors }}
-      {{ form.username }}
+    <div class="profile-edit-content">
+      <form method="post" enctype="multipart/form-data" class="profile-edit-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
 
-      {{ form.email.errors }}
-      {{ form.email }}
+        <div class="avatar-upload">
+          {% if form.profile_pic.value %}
+            <img id="avatar-preview" src="{{ form.profile_pic.value.url }}" class="avatar-preview" alt="Foto de perfil">
+          {% else %}
+            <img id="avatar-preview" src="https://via.placeholder.com/150/3498db/ffffff?text={{ form.username.value|default:'USER'|first|upper }}" class="avatar-preview" alt="Foto de perfil">
+          {% endif %}
+          <label for="id_profile_pic" class="avatar-upload-label">
+            Cambiar foto
+          </label>
+          {{ form.profile_pic }}
+        </div>
 
-      {{ form.bio.errors }}
-      {{ form.bio }}
+        <div class="form-group">
+          <label for="id_username">Nombre de usuario</label>
+          {{ form.username.errors }}
+          <input
+            type="text"
+            name="username"
+            id="id_username"
+            class="form-input"
+            value="{{ form.username.value|default_if_none:'' }}"
+            required
+          >
+        </div>
 
-      {{ form.profile_pic.errors }}
-      {{ form.profile_pic }}
+        <div class="form-group">
+          <label for="id_email">Correo electrónico</label>
+          {{ form.email.errors }}
+          <input
+            type="email"
+            name="email"
+            id="id_email"
+            class="form-input"
+            value="{{ form.email.value|default_if_none:'' }}"
+            required
+          >
+        </div>
 
-      <button type="submit">Guardar cambios</button>
-    </form>
+        <div class="form-group">
+          <label for="id_bio">Biografía</label>
+          {{ form.bio.errors }}
+          <textarea
+            name="bio"
+            id="id_bio"
+            class="form-input"
+            placeholder="Cuéntanos algo sobre ti..."
+          >{{ form.bio.value|default_if_none:'' }}</textarea>
+        </div>
+
+        <button type="submit" class="save-button">
+          Guardar cambios
+        </button>
+      </form>
+    </div>
   </div>
+
+  <script>
+    // Mostrar vista previa de la imagen seleccionada
+    document.getElementById('id_profile_pic').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          document.getElementById('avatar-preview').src = event.target.result;
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+{% include 'includes/footer.html' %}
 </body>
 </html>
