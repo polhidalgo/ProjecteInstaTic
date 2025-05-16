@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d63f4f1-f16d-41b8-b3ad-0a37b9623a78" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/feed.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/feed.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/notifications.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/notifications.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/pic_detail.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/pic_detail.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/profile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/profile_edit.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/profile_edit.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/public_profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/public_profile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/register.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/register.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/upload.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/upload.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insta_tic/static/css/user_search.css" beforeDir="false" afterPath="$PROJECT_DIR$/insta_tic/static/css/user_search.css" afterDir="false" />
-    </list>
+    <list default="true" id="4d63f4f1-f16d-41b8-b3ad-0a37b9623a78" name="Changes" comment="Changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +15,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "polhidalgo"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/polhidalgo/ProjecteInstaTic.git",
+    "accountId": "7a5516a6-06a6-4c57-91f0-1a0ef2187bfa"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -41,8 +40,8 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "staticFiles",
-    "last_opened_file_path": "C:/Users/PolHidalgo/Desktop/POL/INS_TIC/insta_tic"
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/PolHidalgo/Desktop/POL/INS_TIC/ProjecteInstaTic"
   }
 }]]></component>
   <component name="SharedIndexes">
