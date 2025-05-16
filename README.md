@@ -1,99 +1,117 @@
-# 📸 Instatic
+# 📷 Instatic - Red Social Juvenil con Django + HTMX
 
-**Instatic** és una aplicació web senzilla inspirada en Instagram, desenvolupada com a projecte escolar. La primera versió inclou funcionalitats bàsiques com el registre d'usuaris, inici de sessió i edició de perfil.
+**Instatic** es una red social desarrollada con **Django**, que permite a los usuarios registrarse, subir fotos, dar likes, comentar, seguir a otros usuarios y recibir notificaciones. Además, utiliza **HTMX** para mejorar la experiencia de usuario.
 
+---
 
-## ⚙️ Tecnologies utilitzades
+## 🔧 Requisitos
 
-- **Backend**: Django (Python)
-- **Frontend**: HTMX + Bootstrap
-- **Control de versions**: Git + GitHub
+- Python 3.10
+- Docker y Docker Compose (opcional, pero recomendado)
+- Git
 
-## 🏁 Instruccions per començar
+---
 
-### 1. Clona el repositori
+## ⚙️ Instrucciones para desarrollo local
 
-```bash
-git clone https://github.com/phidalgo/insta_tic.git
-cd instatic/backend
-```
-
-### 2. Crea un entorn virtual i activa'l
+### 1. Clona el repositorio
 
 ```bash
-python -m venv env
-source env/bin/activate  # A Windows: env\Scripts\activate
+git clone https://github.com/tu-usuario/instatic.git
+cd instatic
 ```
 
-### 3. Instal·la les dependències
+---
+
+### 2. Crea un entorno virtual e instala dependencias
+
+Asegúrate de usar **Python 3.10** y tener `requirements.txt` en la raíz del proyecto:
 
 ```bash
-pip install django
+python -m venv .venv
+source .venv/bin/activate  # En Windows: .venv\Scripts\activate
+
+pip install -r requirements.txt
 ```
 
-### 4. Crea el projecte de Django (si encara no s'ha creat)
+---
+
+### 3. Configura la base de datos y realiza migraciones
 
 ```bash
-django-admin startproject config .
-```
-
-### 5. Crea l'app per a la gestió d'usuaris
-
-```bash
-python manage.py startapp accounts
-```
-
-### 6. Afegeix l'app `accounts` a `INSTALLED_APPS` a `config/settings.py`
-
-```python
-# config/settings.py
-
-INSTALLED_APPS = [
-    ...
-    'accounts',
-]
-```
-
-### 7. Aplica les migracions inicials
-
-```bash
+python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 8. Crea un superusuari per accedir al panell d’administració
+---
+
+### 4. Crea un superusuario
 
 ```bash
 python manage.py createsuperuser
 ```
 
-### 9. Executa el servidor de desenvolupament
+---
+
+### 5. Ejecuta el servidor
 
 ```bash
 python manage.py runserver
 ```
 
-### 10. Accedeix al projecte al navegador
-
-- **Backend/Admin**: [http://localhost:8000/admin/](http://localhost:8000/admin/)
-- **Frontend (a integrar)**: [http://localhost:8000/](http://localhost:8000/)
+La aplicación estará disponible en [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
-## 🚧 Funcionalitats previstes
+## 🐳 Docker (opcional pero recomendado)
 
-- [x] Registre d'usuaris
-- [x] Inici de sessió
-- [x] Edició de perfil
-- [x] Pujada d’imatges
-- [ ] Línia de temps amb publicacions
-- [x] Comentaris i likes
+Este proyecto incluye configuración para levantar todo con Docker + PostgreSQL:
 
-## 👤 Autors
+```bash
+docker-compose up --build
+```
 
-**Rafel Dalmau, Pol Hidalgo i Enric Ulloa**  
-Estudiant de Desenvolupament d'Aplicacions Web (DAW)  
-📍 Barcelona
+Esto levantará el backend de Django y la base de datos automáticamente.
 
 ---
 
-> Projecte creat amb finalitats educatives 💻
+## 📁 Estructura del proyecto
+
+```
+instatic/
+│
+├── accounts/          # App principal (registro, login, feed, perfil, etc.)
+├── templates/         # Templates HTML (login, feed, perfil, etc.)
+├── static/            # Archivos CSS, JS, imágenes estáticas
+├── media/             # Archivos subidos por los usuarios
+├── requirements.txt   # Dependencias del proyecto
+├── manage.py
+└── docker-compose.yml # Configuración para entorno Docker
+```
+
+---
+
+## 📌 Funcionalidades
+
+- Registro e inicio de sesión personalizados
+- Subida y eliminación de imágenes
+- Feed con publicaciones de usuarios seguidos
+- Likes y comentarios con interacción en tiempo real (HTMX o AJAX)
+- Perfil público y privado
+- Buscador de usuarios
+- Sistema de notificaciones
+- Edición de perfil con foto y biografía
+
+---
+
+## ✅ Notas
+
+- Puedes usar Django Admin en `/admin` con el superusuario que hayas creado.
+- Las imágenes subidas se almacenan en la carpeta `/media`.
+- Si usas Docker, asegúrate de que los puertos no estén ocupados.
+
+---
+
+## 🧑‍💻 Autor
+
+Proyecto desarrollado por [Tu Nombre / Usuario GitHub].
