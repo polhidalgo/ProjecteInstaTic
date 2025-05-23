@@ -202,7 +202,6 @@ class PublicProfileView(LoginRequiredMixin, View):
             return redirect('profile')
 
         pics = profile_user.pics.all().order_by('-created_at')
-        # Add like status for each pic
         for pic in pics:
             pic.is_liked = pic.likes.filter(user=request.user).exists()
             pic.likes_count = pic.likes.count()
@@ -227,24 +226,35 @@ class PublicProfileView(LoginRequiredMixin, View):
             Follower.objects.get_or_create(follower=request.user, followed=profile_user)
         elif 'unfollow' in request.POST:
             Follower.objects.filter(follower=request.user, followed=profile_user).delete()
-        elif 'like' in request.POST:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            profile_user = get_object_or_404(CustomUser, username=username)
             pic = get_object_or_404(Pic, id=request.POST.get('pic_id'))
-            like, created = Like.objects.get_or_create(
-                user=request.user,
-                pic=pic
-            )
-            if not created:
-                like.delete()
-            return redirect('user_public_profile', username=username)
-        elif 'comment' in request.POST:
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.user = request.user
-                comment.pic_id = request.POST.get('pic_id')
-                comment.save()
 
-        return redirect('user_public_profile', username=username)
+            if 'like' in request.POST:
+                like, created = Like.objects.get_or_create(user=request.user, pic=pic)
+                if not created:
+                    like.delete()
+
+                return JsonResponse({
+                    'is_liked': pic.likes.filter(user=request.user).exists(),
+                    'likes_count': pic.likes.count(),
+                })
+
+            elif 'comment' in request.POST:
+                form = CommentForm(request.POST)
+                if form.is_valid():
+                    comment = form.save(commit=False)
+                    comment.user = request.user
+                    comment.pic = pic
+                    comment.save()
+                    comments = pic.comments.all().values('content', 'user__username')
+                    return JsonResponse({
+                        'comments': list(comments)
+                    })
+
+            return JsonResponse({'error': 'Petición inválida'}, status=400)
+        else:
+            return redirect('user_public_profile', username=username)
 
 class NotificationListView(LoginRequiredMixin, View):
     template_name = 'accounts/notifications.html'
